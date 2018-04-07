@@ -1,0 +1,70 @@
+<canvas id="exampleCanvas" width="500" height="300"></canvas>
+
+    <script> 
+    var canvas = document.getElementById('exampleCanvas'),
+        context = canvas.getContext('2d');
+        context.font = "15px Arial";
+        context.fillText("Canvas - Simple graph from an array of values",10,20);// title text
+    
+    // start axis line drawing -------------------------------------------------
+        context.moveTo(10,280);
+        context.lineTo(480,280);
+        context.stroke();
+        context.moveTo(10,280);
+        context.lineTo(10,30);
+        context.stroke();
+    
+     // label function start ---------------------------------------------
+    
+    function Label(x,y,c,l,a){ // x value,  y value, colour value, label text, axis numbering
+            this.x = x;
+            this.y = y;
+            this.c = c;
+            this.l = l;
+            this.a = a;
+        this.draw = function(){
+            context.fillStyle = c; 
+            context.fillText(l,x,295);// text value for the labels on the horizontal axis, x value, y value
+            context.fillStyle = 'black'; 
+            context.fillText(a,15,y); // number value for the vertical axis
+        };
+    }
+    var x = 35; // start x position for the horizontal axis
+    var y = 278;// start y position for the vertical axis
+    var axis = [0,50,100,150,200,250];// vertical axis values
+    var labels = ["Car","Truck ","Plane","red","blue","green","red","blue","green","orange"]; // label text array
+    var colours = ["red","blue","green","red","blue","green","red","blue","green","orange"];// Label text colour array
+    
+    for (i = 0; i < labels.length; i++) { // for loop, loops through the label values
+        var label = new Label(x,y,colours[i],labels[i],axis[i]);// calls a new instance of the label object and passes in the values
+        label.draw(); // calls the draw method of the label object
+        x += 45;// increment x by 45 px
+        y -= 47; // Decrements y by 47 pixels
+    }
+    // label function end ---------------------------------------------------
+    
+    // bar function start ----------------------------------------------
+    
+    context.setTransform(1,0,0,-1,-20,479);// flip the y axis to place the bars at the bottom , move the origin down
+    
+        function Bar(x,y,h,c){
+            this.x = x;
+            this.y = y;
+            this.h = h;
+            this.c = c;
+        this.draw = function(){
+            context.fillStyle = c;
+            context.fillRect(x, y, 45, h);
+        };
+    }
+    
+    var x = 50;
+    var h = 200;
+    var values = [10,50,75,150,45,100,25,250,49,80]// values for each bar
+    var colours = ["red","blue","green","red","blue","green","red","blue","green","orange"];// colour for each bar
+    for (i = 0; i < values.length; i++) { 
+        var bar = new Bar(x,200,values[i],colours[i]);
+        bar.draw();
+        x += 45;
+    }
+    </script>
